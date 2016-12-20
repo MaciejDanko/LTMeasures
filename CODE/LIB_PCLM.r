@@ -14,7 +14,7 @@ compmat<-function(x,
                   bs.df.max=150,
                   bs.deg=3){ 
   
-  #Construct composition matrix object and automaticaly recalibrate age classes
+  #Construct composition matrix object and automatically recalibrate age classes
   
   #x = age vector
   #y = vector with counts, e.g. DX. It must have the same length as x
@@ -31,7 +31,7 @@ compmat<-function(x,
   #     -'bs' = basic B-splines basis based on splines:::bs()
   #bs.df = B-spline degree of freedom (number of inner knots) or a way to its calculation: 
   #     -'maxprec' = equal to the number of small age classes up to maximum defined in bs.df.max (preferable), 
-  #     -'thumb' = rule of thumb: one knot for the B-spline basis each 4-5 observations, up to maximum deffined in bs.df.max
+  #     -'thumb' = rule of thumb: one knot for the B-spline basis each 4-5 observations, up to maximum defined in bs.df.max
   #     - or any value
   #bs.df.max = maximum number of knots (df) for B-spline basis.
   #bs.deg = degree of the piecewise polynomial
@@ -175,12 +175,12 @@ pclm <- function(CompositionMatrix,  lambda=1, deg = 2, max.iter=100,
 opt.pclm<-function(CompositionMatrix, opt.method=c('BIC','AIC'), opt.tol=.Machine$double.eps^0.5,...){
   
   #INPUT
-  #CompositionMatrix = Composition Matrix calcualted by compmat()
+  #CompositionMatrix = Composition Matrix calculated by compmat()
   #opt.method = one of the maximization criteria for lambda optimization: AIC and BIC (preferable)
   #opt.tol = Optimization tolerance
   #... options passed to the pclm method
   #OUTPUT
-  # $X = ungropued age classes
+  # $X = ungrouped age classes
   # $Y = ungrouped counts
   # $lambda = optimal smooth parameter
   # $fit = fit object
@@ -268,27 +268,29 @@ get.smooth.life.table<-function(fit, out.step=NULL, count.type=c('DX','LX')){
 frac<-function(x,digits=floor(-log10(.Machine$double.eps^0.5))) round(x-floor(round(x,digits)),digits)
 
 #Main procedure to calculate PCLM with automated step
+#More detailed description of prameters can be found in compmat and pclm function
 PCLM<-function(x,y,      #DATA
-               x.div=10, #Increase for higher precission
+               x.div=10, #Increase for higher precision
                x.max.ext=20, #internal parameter, maximal multiple of age interval
-               x.auto.trans=T, #Automticaly multiple age intervals to remove fractions?
+               x.auto.trans=T, #Automatically multiple age intervals to remove fractions?
                count.type=c('DX','LX'),
                zero.class.add=T, #T: It typically should be added
-               zero.class.end=NULL,  #put here manualy the end of open interval if necessary
+               zero.class.end=NULL,  #put here manually the end of open interval if necessary
                zero.class.frac=0.2,  #internal parameter
-               exposures=NULL, #this method is equivalent to unsmothing LX and DX separately to calcualte mu
-               bs.use=(x.div*length(x))>=bs.df.max, #internal parameter, F force xtensive but precise computations
+               exposures=NULL, #this method is equivalent to unsmoothing LX and DX separately to calcualte mu
+               bs.use=(x.div*length(x))>=bs.df.max, #internal parameter, F force extensive but precise computations
                bs.method=c('MortalitySmooth','bs'), #internal parameter, use first method only
                bs.df=c('max','thumb',floor(length(x)/4)), #internal parameter, first method preferable
                bs.df.max=100, #internal parameter, but decrease it if computations are too slow
                bs.deg=3, #internal parameter, preferable value is 3
-               out.step=min(diff(x),1), #age interval length in output file, automaticaly corrected
+               out.step=min(diff(x),1), #age interval length in output file, automatically corrected
                opt.method=c('BIC','AIC'), #internal, BIC is more preferable - more smooth output
                opt.tol=.Machine$double.eps^0.5, #internal parameter
                pclm.deg = 2, #internal parameter, higher values may not work
                pclm.max.iter=100, #internal parameter, but increase on warning
                pclm.lsfit.tol=.Machine$double.eps^0.5, #internal parameter
                pclm.tol=.Machine$double.eps^0.5){ #internal parameter
+  
   
   WARN=list() 
   if (all(order(x)!=1:length(x))) stop ('Age classes are not ordered')

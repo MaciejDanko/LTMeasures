@@ -1,7 +1,7 @@
 #This is only a small part of the main program 
 #The program test the effect of interval length on calculation some life-table measures, like: 
-#Keyfitz entropy, Gini, Coficient of variaion, etc.
-#Please note that most computationaly advanced routines can be foud in atached LIB files (especially in LIB_PCLM)
+#Keyfitz entropy, Gini, Coefficient of variation, etc.
+#Please note that most computationally advanced routines can be found in attached LIB files (especially in LIB_PCLM)
 
 require(magicaxis)
 require(gplots)
@@ -10,7 +10,7 @@ Dir=paste0(getwd(),'/')
 Lib_Dir=Dir
 
 #Here is the source code for some functions used
-#They will be placed in my local r-package, currently atached as "source" r-files
+#They will be placed in my local r-package, currently attached as "source" r-files
 
 source(paste0(Lib_Dir,'LIB_PASH.r'))
 source(paste0(Lib_Dir,'LIB_PCLM.r'))
@@ -37,7 +37,7 @@ my.pal<-function(n,alpha=1,rgb=F,colors=c('#000064FF','darkblue','blue3','blue2'
 
 #Modified version of filled.contour {graphics} function
 #The function extends original routines by adding multiple panel plotting, custom labeling
-#Addidtional parameters:
+#Additional parameters:
 #First.Plot = flag denoting if this is the first panel
 #ScaleText = text label for the scale
 my.filled.contour<-function (x = seq(0, 1, length.out = nrow(z)), y = seq(0, 1,length.out = ncol(z)), 
@@ -150,10 +150,10 @@ Perform.Analysis<-function(x,a,b,c=0,s=0,trace=T){
   #Allocating memory
   Empty=matrix(NA,length(a),length(b))
   Mat.Theo.e0<-Mat.Theo.K<-Mat.Theo.G<-Mat.Theo.CV<-  
-  Mat.Empi.e0a<-Mat.Empi.e0b<-Mat.Empi.e0c<-Mat.Empi.e0d<-
-  Mat.Empi.K1<- Mat.Empi.K2<- Mat.Empi.K3<- Mat.Empi.K4<-
-  Mat.Empi.G1<- Mat.Empi.G2<- Mat.Empi.G3<- Mat.Empi.G4<-
-  Mat.Empi.CV1<-Mat.Empi.CV2<-Mat.Empi.CV3<-Mat.Empi.CV4<-Empty
+    Mat.Empi.e0a<-Mat.Empi.e0b<-Mat.Empi.e0c<-Mat.Empi.e0d<-
+    Mat.Empi.K1<- Mat.Empi.K2<- Mat.Empi.K3<- Mat.Empi.K4<-
+    Mat.Empi.G1<- Mat.Empi.G2<- Mat.Empi.G3<- Mat.Empi.G4<-
+    Mat.Empi.CV1<-Mat.Empi.CV2<-Mat.Empi.CV3<-Mat.Empi.CV4<-Empty
   
   for (ai in 1:length(a))
     for (bi in 1:length(b)){
@@ -182,7 +182,7 @@ Perform.Analysis<-function(x,a,b,c=0,s=0,trace=T){
       HT2=PASH(lx=pclmres$raw$lx,x=pclmres$raw$x,iax=pclmres$raw$Ax)$M
       HT3=PASH(lx=lx,x=x_,iax=pclmres$grouped$Ax[1:length(x_)])$M
       HT4=PASH(lx=lx,x=x_,iax=0.5)$M
-            
+      
       #preparing output
       #theoretical measures
       Mat.Theo.e0[ai,bi]=GGM.e0(a_,b_,s,c); Mat.Theo.K[ai,bi]=(GGM.dager(a_,b_,s,c)/Mat.Theo.e0[ai,bi]);
@@ -221,7 +221,7 @@ Perform.Analysis<-function(x,a,b,c=0,s=0,trace=T){
   colnames(Mat.Theo.CV)=B; rownames(Mat.Theo.CV)=A
   colnames(Mat.Theo.e0)=B; rownames(Mat.Theo.e0)=A
   colnames(Mat.Theo.K)=B; rownames(Mat.Theo.K)=A
-
+  
   list(Mat.Theo.K=Mat.Theo.K, Mat.Theo.e0=Mat.Theo.e0,
        Mat.Theo.G=Mat.Theo.G, Mat.Theo.CV=Mat.Theo.CV,
        Mat.Empi.K1=Mat.Empi.K1, Mat.Empi.K2=Mat.Empi.K2,
@@ -245,254 +245,254 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
                            Panel.id.pos=0.025,Panel.id.col='red3',Stat.info.col='black',
                            ColSegm1=c('blue','white','red'),
                            ColSegm2=c('#000064FF','darkblue','blue3','blue2','blue',
-                                  'white','red','red2','red3','darkred','#640000FF')) {
+                                      'white','red','red2','red3','darkred','#640000FF')) {
   
-   PAL1=function(n,alpha=1,rgb=F) my.pal(n=n,alpha=alpha,rgb=rgb,colors=ColSegm1)
-   PAL2=function(n,alpha=1,rgb=F) my.pal(n=n,alpha=alpha,rgb=rgb,colors=ColSegm2)
+  PAL1=function(n,alpha=1,rgb=F) my.pal(n=n,alpha=alpha,rgb=rgb,colors=ColSegm1)
+  PAL2=function(n,alpha=1,rgb=F) my.pal(n=n,alpha=alpha,rgb=rgb,colors=ColSegm2)
   
-   #Age interval
-   S=DDD$Age.Interval
-   
-   #Vectors with Gompertz parameters
-   a.=DDD$a
-   b.=DDD$b
-   
-   #Basic statistics
-   RelDiff<-function(Theo,Empi) 100*((Theo-Empi)/Theo)[Theo!=0]
-   
-   e0ar=range(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0a))
-   e0am=mean(abs(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0a)))
-   e0br=range(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0b))
-   e0bm=mean(abs(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0b)))
-   e0cr=range(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0c))
-   e0cm=mean(abs(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0c)))
-   e0dr=range(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0d))
-   e0dm=mean(abs(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0d)))
-   
-   K1r=range(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K1))
-   K1m=mean(abs(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K1)))
-   K2r=range(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K2))
-   K2m=mean(abs(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K2)))
-   K3r=range(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K3))
-   K3m=mean(abs(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K3)))
-   K4r=range(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K4))
-   K4m=mean(abs(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K4))) 
+  #Age interval
+  S=DDD$Age.Interval
   
-   G1r=range(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G1))
-   G1m=mean(abs(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G1)))
-   G2r=range(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G2))
-   G2m=mean(abs(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G2)))
-   G3r=range(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G3))
-   G3m=mean(abs(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G3)))
-   G4r=range(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G4))
-   G4m=mean(abs(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G4)))
-   
-   CV1r=range(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV1))
-   CV1m=mean(abs(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV1)))
-   CV2r=range(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV2))
-   CV2m=mean(abs(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV2)))
-   CV3r=range(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV3))
-   CV3m=mean(abs(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV3)))
-   CV4r=range(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV4))
-   CV4m=mean(abs(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV4)))
-   
-   ###### BEGINING OF FIRST PLOT #######
+  #Vectors with Gompertz parameters
+  a.=DDD$a
+  b.=DDD$b
   
-   #z axis calcualtion
-   R=ceiling(max(abs(K1r),abs(K2r),abs(K3r))*10)/10
-   
-   Xsize=7;Ysize=6;FName=paste('AX_G_K_',S,'.tiff',sep='');Fac=333
-   graphics.off()
-   tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
-   par(mar=c(5.1,4.1,2.1,2.1))
-   par(cex=0.9);par(cex.axis=1.2);
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K1)/DDD$Mat.Theo.K,nlevels=32,
-                     color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     XXX=0.225,my.mfrow=c(2,2),First.Plot=T,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('PCLM, grouped x, Ax computed')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('A')),cex=1.5,col=Panel.id.col)
-   ptext(K1r,K1m,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K2)/DDD$Mat.Theo.K,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('PCLM, not grouped x, Ax = 0.5')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('B')),cex=1.5,col=Panel.id.col)
-   ptext(K2r,K2m,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K3)/DDD$Mat.Theo.K,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     sub=expression(paste(100,'*',(K[Theoretical]-K[Empirical])/K[Theoretical])),
-                     main=expression(bold('No PCLM, Ax computed from PCLM')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('C')),cex=1.5,col=Panel.id.col)
-   ptext(K3r,K3m,col=Stat.info.col)
-   
-   #z axis calcualtion
-   R=ceiling(max(abs(K4r))*10)/10
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K4)/DDD$Mat.Theo.K,nlevels=32,
-                     color.palette=PAL2,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     sub=expression(paste(100,'*',(K[Theoretical]-K[Empirical])/K[Theoretical])),
-                     main=expression(bold('No PCLM, Ax = 0.5')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('D')),cex=1.5,col=Panel.id.col)
-   ptext(K4r,K4m,col=Stat.info.col)
-   dev.off()
-   ###### END OF FIRST PLOT #######
-   
-   
-   ###### BEGINING OF SECOND PLOT #######
-   Xsize=7;Ysize=6;FName=paste('AX_G_G_',S,'.tiff',sep='');Fac=333
-   graphics.off()
-   tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
-   par(mar=c(5.1,4.1,2.1,2.1))
-   par(cex=0.9);par(cex.axis=1.2);
-   #z axis calcualtion
-   R=ceiling(max(abs(G1r),abs(G2r),abs(G3r),abs(G4r))*10)/10
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.G-DDD$Mat.Empi.G1)/DDD$Mat.Theo.G,nlevels=32,
-                     color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     XXX=0.225,my.mfrow=c(2,2),First.Plot=T,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('PCLM, grouped x, Ax computed')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('A')),cex=1.5,col=Panel.id.col)
-   ptext(G1r,G1m,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.G-DDD$Mat.Empi.G2)/DDD$Mat.Theo.G,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('PCLM, not grouped x, Ax = 0.5')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('B')),cex=1.5,col=Panel.id.col)
-   ptext(G2r,G2m,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.G-DDD$Mat.Empi.G3)/DDD$Mat.Theo.G,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     sub=expression(paste(100,'*',(K[Theoretical]-K[Empirical])/K[Theoretical])),
-                     main=expression(bold('No PCLM, Ax computed from PCLM')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('C')),cex=1.5,col=Panel.id.col)
-   ptext(G3r,G3m,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K4)/DDD$Mat.Theo.K,nlevels=32,
-                     color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     sub=expression(paste(100,'*',(K[Theoretical]-K[Empirical])/K[Theoretical])),
-                     main=expression(bold('No PCLM, Ax = 0.5')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('D')),cex=1.5,col=Panel.id.col)
-   ptext(G4r,G4m,col=Stat.info.col)
-   dev.off()
-   ###### END OF SECOND PLOT #######
-   
-   
-   ###### BEGINING OF THIRD PLOT #######
-   Xsize=7;Ysize=6;FName=paste('AX_G_CV_',S,'.tiff',sep='');Fac=333
-   graphics.off()
-   #z axis calcualtion
-   R=ceiling(max(abs(CV1r),abs(CV2r),abs(CV3r))*10)/10
-   
-   tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
-   par(mar=c(5.1,4.1,2.1,2.1))
-   par(cex=0.9);par(cex.axis=1.2);
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV1)/DDD$Mat.Theo.CV,nlevels=32,
-                     color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     XXX=0.225,my.mfrow=c(2,2),First.Plot=T,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('PCLM, grouped x, Ax computed')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('A')),cex=1.5,col=Panel.id.col)
-   ptext(CV1r,CV1m,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV2)/DDD$Mat.Theo.CV,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('PCLM, not grouped x, Ax = 0.5')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('B')),cex=1.5,col=Panel.id.col)
-   ptext(CV2r,CV2m,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV3)/DDD$Mat.Theo.CV,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('No PCLM, Ax computed from PCLM')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('C')),cex=1.5,col=Panel.id.col)
-   ptext(CV3r,CV3m,col=Stat.info.col)
-   
-   #z axis calcualtion
-   R=ceiling(max(abs(CV4r))*10)/10
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV4)/DDD$Mat.Theo.CV,nlevels=32,
-                     color.palette=PAL2,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('No PCLM, Ax = 0.5')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('D')),cex=1.5,col=Panel.id.col)
-   ptext(CV4r,CV4m,col=Stat.info.col)
-   dev.off()
-   ###### END OF THIRD PLOT #######
-   
-   ###### BEGINING OF FOURTH PLOT #######
-   Xsize=7;Ysize=6;FName=paste('AX_G_e0_',S,'.tiff',sep='');Fac=333
-   graphics.off()
-   R=ceiling(max(abs(e0ar),abs(e0br),abs(e0cr))*10)/10
-   tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
-   par(mar=c(5.1,4.1,2.1,2.1))
-   par(cex=0.9);par(cex.axis=1.2);
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0a)/DDD$Mat.Theo.e0,nlevels=32,
-                     color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     XXX=0.225,my.mfrow=c(2,2),First.Plot=T,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('PCLM, grouped x, Ax computed')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('A')),cex=1.5,col=Panel.id.col)
-   ptext(e0ar,e0am,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0b)/DDD$Mat.Theo.e0,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('PCLM, not grouped x, Ax = 0.5')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('B')),cex=1.5,col=Panel.id.col)
-   ptext(e0br,e0bm,col=Stat.info.col)
-   
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0c)/DDD$Mat.Theo.e0,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('No PCLM, Ax computed from PCLM')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('C')),cex=1.5,col=Panel.id.col)
-   ptext(e0cr,e0cm,col=Stat.info.col)
-   
-   #z axis calcualtion
-   R=ceiling(max(abs(e0dr))*10)/10
-   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0d)/DDD$Mat.Theo.e0,nlevels=91,
-                     color.palette=PAL2,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
-                     my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
-                     main=expression(bold('No PCLM, Ax = 0.5')),
-                     ScaleText=expression('[%]'),
-                     las=0)
-   mtext(at=Panel.id.pos,line=-2.5,expression(bold('D')),cex=1.5,col=Panel.id.col)
-   ptext(e0dr,e0dm,col=Stat.info.col)
-   dev.off()
-   ###### END OF FOURTH PLOT #######
-   
+  #Basic statistics
+  RelDiff<-function(Theo,Empi) 100*((Theo-Empi)/Theo)[Theo!=0]
+  
+  e0ar=range(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0a))
+  e0am=mean(abs(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0a)))
+  e0br=range(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0b))
+  e0bm=mean(abs(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0b)))
+  e0cr=range(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0c))
+  e0cm=mean(abs(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0c)))
+  e0dr=range(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0d))
+  e0dm=mean(abs(RelDiff(DDD$Mat.Theo.e0,DDD$Mat.Empi.e0d)))
+  
+  K1r=range(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K1))
+  K1m=mean(abs(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K1)))
+  K2r=range(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K2))
+  K2m=mean(abs(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K2)))
+  K3r=range(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K3))
+  K3m=mean(abs(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K3)))
+  K4r=range(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K4))
+  K4m=mean(abs(RelDiff(DDD$Mat.Theo.K,DDD$Mat.Empi.K4))) 
+  
+  G1r=range(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G1))
+  G1m=mean(abs(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G1)))
+  G2r=range(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G2))
+  G2m=mean(abs(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G2)))
+  G3r=range(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G3))
+  G3m=mean(abs(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G3)))
+  G4r=range(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G4))
+  G4m=mean(abs(RelDiff(DDD$Mat.Theo.G,DDD$Mat.Empi.G4)))
+  
+  CV1r=range(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV1))
+  CV1m=mean(abs(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV1)))
+  CV2r=range(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV2))
+  CV2m=mean(abs(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV2)))
+  CV3r=range(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV3))
+  CV3m=mean(abs(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV3)))
+  CV4r=range(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV4))
+  CV4m=mean(abs(RelDiff(DDD$Mat.Theo.CV,DDD$Mat.Empi.CV4)))
+  
+  ###### BEGINING OF FIRST PLOT #######
+  
+  #z axis calculation
+  R=ceiling(max(abs(K1r),abs(K2r),abs(K3r))*10)/10
+  
+  Xsize=7;Ysize=6;FName=paste('AX_G_K_',S,'.tiff',sep='');Fac=333
+  graphics.off()
+  tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
+  par(mar=c(5.1,4.1,2.1,2.1))
+  par(cex=0.9);par(cex.axis=1.2);
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K1)/DDD$Mat.Theo.K,nlevels=32,
+                    color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    XXX=0.225,my.mfrow=c(2,2),First.Plot=T,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('PCLM, grouped x, Ax computed')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('A')),cex=1.5,col=Panel.id.col)
+  ptext(K1r,K1m,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K2)/DDD$Mat.Theo.K,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('PCLM, not grouped x, Ax = 0.5')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('B')),cex=1.5,col=Panel.id.col)
+  ptext(K2r,K2m,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K3)/DDD$Mat.Theo.K,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    sub=expression(paste(100,'*',(K[Theoretical]-K[Empirical])/K[Theoretical])),
+                    main=expression(bold('No PCLM, Ax computed from PCLM')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('C')),cex=1.5,col=Panel.id.col)
+  ptext(K3r,K3m,col=Stat.info.col)
+  
+  #z axis calculation
+  R=ceiling(max(abs(K4r))*10)/10
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K4)/DDD$Mat.Theo.K,nlevels=32,
+                    color.palette=PAL2,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    sub=expression(paste(100,'*',(K[Theoretical]-K[Empirical])/K[Theoretical])),
+                    main=expression(bold('No PCLM, Ax = 0.5')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('D')),cex=1.5,col=Panel.id.col)
+  ptext(K4r,K4m,col=Stat.info.col)
+  dev.off()
+  ###### END OF FIRST PLOT #######
+  
+  
+  ###### BEGINING OF SECOND PLOT #######
+  Xsize=7;Ysize=6;FName=paste('AX_G_G_',S,'.tiff',sep='');Fac=333
+  graphics.off()
+  tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
+  par(mar=c(5.1,4.1,2.1,2.1))
+  par(cex=0.9);par(cex.axis=1.2);
+  #z axis calcualtion
+  R=ceiling(max(abs(G1r),abs(G2r),abs(G3r),abs(G4r))*10)/10
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.G-DDD$Mat.Empi.G1)/DDD$Mat.Theo.G,nlevels=32,
+                    color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    XXX=0.225,my.mfrow=c(2,2),First.Plot=T,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('PCLM, grouped x, Ax computed')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('A')),cex=1.5,col=Panel.id.col)
+  ptext(G1r,G1m,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.G-DDD$Mat.Empi.G2)/DDD$Mat.Theo.G,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('PCLM, not grouped x, Ax = 0.5')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('B')),cex=1.5,col=Panel.id.col)
+  ptext(G2r,G2m,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.G-DDD$Mat.Empi.G3)/DDD$Mat.Theo.G,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    sub=expression(paste(100,'*',(K[Theoretical]-K[Empirical])/K[Theoretical])),
+                    main=expression(bold('No PCLM, Ax computed from PCLM')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('C')),cex=1.5,col=Panel.id.col)
+  ptext(G3r,G3m,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K4)/DDD$Mat.Theo.K,nlevels=32,
+                    color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    sub=expression(paste(100,'*',(K[Theoretical]-K[Empirical])/K[Theoretical])),
+                    main=expression(bold('No PCLM, Ax = 0.5')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('D')),cex=1.5,col=Panel.id.col)
+  ptext(G4r,G4m,col=Stat.info.col)
+  dev.off()
+  ###### END OF SECOND PLOT #######
+  
+  
+  ###### BEGINING OF THIRD PLOT #######
+  Xsize=7;Ysize=6;FName=paste('AX_G_CV_',S,'.tiff',sep='');Fac=333
+  graphics.off()
+  #z axis calcualtion
+  R=ceiling(max(abs(CV1r),abs(CV2r),abs(CV3r))*10)/10
+  
+  tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
+  par(mar=c(5.1,4.1,2.1,2.1))
+  par(cex=0.9);par(cex.axis=1.2);
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV1)/DDD$Mat.Theo.CV,nlevels=32,
+                    color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    XXX=0.225,my.mfrow=c(2,2),First.Plot=T,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('PCLM, grouped x, Ax computed')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('A')),cex=1.5,col=Panel.id.col)
+  ptext(CV1r,CV1m,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV2)/DDD$Mat.Theo.CV,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('PCLM, not grouped x, Ax = 0.5')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('B')),cex=1.5,col=Panel.id.col)
+  ptext(CV2r,CV2m,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV3)/DDD$Mat.Theo.CV,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('No PCLM, Ax computed from PCLM')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('C')),cex=1.5,col=Panel.id.col)
+  ptext(CV3r,CV3m,col=Stat.info.col)
+  
+  #z axis calculation
+  R=ceiling(max(abs(CV4r))*10)/10
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV4)/DDD$Mat.Theo.CV,nlevels=32,
+                    color.palette=PAL2,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('No PCLM, Ax = 0.5')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('D')),cex=1.5,col=Panel.id.col)
+  ptext(CV4r,CV4m,col=Stat.info.col)
+  dev.off()
+  ###### END OF THIRD PLOT #######
+  
+  ###### BEGINING OF FOURTH PLOT #######
+  Xsize=7;Ysize=6;FName=paste('AX_G_e0_',S,'.tiff',sep='');Fac=333
+  graphics.off()
+  R=ceiling(max(abs(e0ar),abs(e0br),abs(e0cr))*10)/10
+  tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
+  par(mar=c(5.1,4.1,2.1,2.1))
+  par(cex=0.9);par(cex.axis=1.2);
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0a)/DDD$Mat.Theo.e0,nlevels=32,
+                    color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    XXX=0.225,my.mfrow=c(2,2),First.Plot=T,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('PCLM, grouped x, Ax computed')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('A')),cex=1.5,col=Panel.id.col)
+  ptext(e0ar,e0am,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0b)/DDD$Mat.Theo.e0,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('PCLM, not grouped x, Ax = 0.5')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('B')),cex=1.5,col=Panel.id.col)
+  ptext(e0br,e0bm,col=Stat.info.col)
+  
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0c)/DDD$Mat.Theo.e0,nlevels=32,color.palette=PAL1,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('No PCLM, Ax computed from PCLM')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('C')),cex=1.5,col=Panel.id.col)
+  ptext(e0cr,e0cm,col=Stat.info.col)
+  
+  #z axis calculation
+  R=ceiling(max(abs(e0dr))*10)/10
+  my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0d)/DDD$Mat.Theo.e0,nlevels=91,
+                    color.palette=PAL2,xlab="Gompertz's a",ylab="Gompertz's b",cex.lab=1.5,
+                    my.mfrow=c(2,2),First.Plot=F,neg.z=F,cex.main=1.3,zlim=c(-R,R),
+                    main=expression(bold('No PCLM, Ax = 0.5')),
+                    ScaleText=expression('[%]'),
+                    las=0)
+  mtext(at=Panel.id.pos,line=-2.5,expression(bold('D')),cex=1.5,col=Panel.id.col)
+  ptext(e0dr,e0dm,col=Stat.info.col)
+  dev.off()
+  ###### END OF FOURTH PLOT #######
+  
 }
 
 
@@ -524,4 +524,3 @@ if (load.flag) {
 Perform.Plotting(DDD=DDD_1)
 Perform.Plotting(DDD=DDD_2)
 Perform.Plotting(DDD=DDD_5)
-
