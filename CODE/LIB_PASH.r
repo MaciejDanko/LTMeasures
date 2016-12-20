@@ -8,7 +8,7 @@
 PASH<-function(lx,x=(1:length(lx))-1,iax=0.5,open.int=F,pop=lx[1],
                LXMethod=c('Preston','Mortality'),
                GiniMethod=c('PASH','PASCARIU2016','DANKO2016','D2016',
-                            'SKHOLNIKOVANDREEW2014','SA2014','DANKO2016','ALL')
+                            'SKHOLNIKOVANDREEW2014','SA2014','DANKO2016','ALL'),
                CVMethod=c('PASH','P2016','PASCARIU2016','SKHOLNIKOVANDREEW2014',
                           'SA2014','WRYCZA2014','DW2014','ALL')){
                  

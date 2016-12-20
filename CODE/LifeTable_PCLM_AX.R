@@ -7,7 +7,7 @@ require(magicaxis)
 require(gplots)
 
 Dir=paste0(getwd(),'/')
-Lib_Dir=Dir
+Lib_Dir='./CODE/'
 
 #Here is the source code for some functions used
 #They will be placed in my local r-package, currently attached as "source" r-files
