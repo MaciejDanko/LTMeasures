@@ -1,4 +1,10 @@
-
+#Calculating life-table and its measures
+#lx - survivorship or number of surviving
+#x - age
+#iax - life-table Ax
+#open.int - account for open interval
+#pop - population size
+#...Method - different methods of approximation
 PASH<-function(lx,x=(1:length(lx))-1,iax=0.5,open.int=F,pop=lx[1],
                LXMethod=c('Preston','Mortality'),
                GiniMethod=c('PASH','PASCARIU2016','DANKO2016','D2016',
@@ -135,12 +141,8 @@ PASH<-function(lx,x=(1:length(lx))-1,iax=0.5,open.int=F,pop=lx[1],
   #LifeTable
   LT=as.data.frame(cbind(x=x,lx=lx,dx=dx,qx=qx,Ax=iax,ax=ax,Lx=Lx,Tx=Tx,mx=mx,ex=ex))
   
-  #Crude shape
-  #Shape.G.a=2*(1-G)-1 #non.scaled
   Shape.G=1/G-1
-  #Shape.H.a=1/K[1]
   Shape.H=1-K[1]
-  #Shape.CV.a=1/CV[1]
   Shape.CV=1-CV[1]
   Shape.Crude=MaxLifeSpan/e0
   
