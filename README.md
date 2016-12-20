@@ -5,4 +5,4 @@ This is a part of the most recent project I have coded. It was done for MaxO gro
 
 The details of the model can be found in atached PDF file
 
-
+The main code is in  LifeTable_PCLM_AX.R
