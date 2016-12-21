@@ -6,7 +6,6 @@
 require(magicaxis)
 require(gplots)
 
-Dir=paste0(getwd(),'/')
 Lib_Dir='./CODE/'
 
 #Here is the source code for some functions used
@@ -241,7 +240,7 @@ Perform.Analysis<-function(x,a,b,c=0,s=0,trace=T){
 #Panel.id.col - color of panel letter
 #Stat.info.col - Color of stat. text in plot
 #PAL1, PAL2 - color segments for different kinds of plot
-Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
+Perform.Plotting<-function(DDD,
                            Panel.id.pos=0.025,Panel.id.col='red3',Stat.info.col='black',
                            ColSegm1=c('blue','white','red'),
                            ColSegm2=c('#000064FF','darkblue','blue3','blue2','blue',
@@ -303,7 +302,7 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
   
   Xsize=7;Ysize=6;FName=paste('./FIG/AX_G_K_',S,'.tiff',sep='');Fac=333
   graphics.off()
-  tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
+  tiff(FName, width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
   par(mar=c(5.1,4.1,2.1,2.1))
   par(cex=0.9);par(cex.axis=1.2);
   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.K-DDD$Mat.Empi.K1)/DDD$Mat.Theo.K,nlevels=32,
@@ -352,7 +351,7 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
   ###### BEGINING OF SECOND PLOT #######
   Xsize=7;Ysize=6;FName=paste('./FIG/AX_G_G_',S,'.tiff',sep='');Fac=333
   graphics.off()
-  tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
+  tiff(FName, width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
   par(mar=c(5.1,4.1,2.1,2.1))
   par(cex=0.9);par(cex.axis=1.2);
   #z axis calcualtion
@@ -404,7 +403,7 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
   #z axis calcualtion
   R=ceiling(max(abs(CV1r),abs(CV2r),abs(CV3r))*10)/10
   
-  tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
+  tiff(FName, width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
   par(mar=c(5.1,4.1,2.1,2.1))
   par(cex=0.9);par(cex.axis=1.2);
   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.CV-DDD$Mat.Empi.CV1)/DDD$Mat.Theo.CV,nlevels=32,
@@ -451,7 +450,7 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
   Xsize=7;Ysize=6;FName=paste('./FIG/AX_G_e0_',S,'.tiff',sep='');Fac=333
   graphics.off()
   R=ceiling(max(abs(e0ar),abs(e0br),abs(e0cr))*10)/10
-  tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
+  tiff(FName, width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
   par(mar=c(5.1,4.1,2.1,2.1))
   par(cex=0.9);par(cex.axis=1.2);
   my.filled.contour(a.,b.,100*(DDD$Mat.Theo.e0-DDD$Mat.Empi.e0a)/DDD$Mat.Theo.e0,nlevels=32,
@@ -508,17 +507,17 @@ s=0
 load.flag=T # Set to F if you want re-run computations
 
 if (load.flag) {
-  load(file=paste(Dir,'AX3_5.dat',sep=''))
-  load(file=paste(Dir,'AX3_2.dat',sep=''))
-  load(file=paste(Dir,'AX3_1.dat',sep='')) 
+  load(file='./DAT/AX3_5.dat')
+  load(file='./DAT/AX3_2.dat')
+  load(file='./DAT/AX3_1.dat') 
 } else {
   #Quite long computations!!!
   DDD_5=Perform.Analysis(x=seq(0,1e4,5),a=a.,b=b.,c=c,s=s)
   DDD_2=Perform.Analysis(x=seq(0,1e4,2),a=a.,b=b.,c=c,s=s)
   DDD_1=Perform.Analysis(x=seq(0,1e4,1),a=a.,b=b.,c=c,s=s)  
-  save(DDD_5,file=paste(Dir,'AX3_5.dat',sep=''))
-  save(DDD_2,file=paste(Dir,'AX3_2.dat',sep=''))
-  save(DDD_1,file=paste(Dir,'AX3_1.dat',sep=''))
+  save(DDD_5,file='./DAT/AX3_5.dat')
+  save(DDD_2,file='./DAT/AX3_2.dat')
+  save(DDD_1,file='./DAT/AX3_1.dat')
 }
 
 Perform.Plotting(DDD=DDD_1)
