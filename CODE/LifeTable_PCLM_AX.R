@@ -301,7 +301,7 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
   #z axis calculation
   R=ceiling(max(abs(K1r),abs(K2r),abs(K3r))*10)/10
   
-  Xsize=7;Ysize=6;FName=paste('AX_G_K_',S,'.tiff',sep='');Fac=333
+  Xsize=7;Ysize=6;FName=paste('./FIG/AX_G_K_',S,'.tiff',sep='');Fac=333
   graphics.off()
   tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
   par(mar=c(5.1,4.1,2.1,2.1))
@@ -350,7 +350,7 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
   
   
   ###### BEGINING OF SECOND PLOT #######
-  Xsize=7;Ysize=6;FName=paste('AX_G_G_',S,'.tiff',sep='');Fac=333
+  Xsize=7;Ysize=6;FName=paste('./FIG/AX_G_G_',S,'.tiff',sep='');Fac=333
   graphics.off()
   tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
   par(mar=c(5.1,4.1,2.1,2.1))
@@ -399,7 +399,7 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
   
   
   ###### BEGINING OF THIRD PLOT #######
-  Xsize=7;Ysize=6;FName=paste('AX_G_CV_',S,'.tiff',sep='');Fac=333
+  Xsize=7;Ysize=6;FName=paste('./FIG/AX_G_CV_',S,'.tiff',sep='');Fac=333
   graphics.off()
   #z axis calcualtion
   R=ceiling(max(abs(CV1r),abs(CV2r),abs(CV3r))*10)/10
@@ -448,7 +448,7 @@ Perform.Plotting<-function(DDD,Dir=paste0(getwd(),'/'),
   ###### END OF THIRD PLOT #######
   
   ###### BEGINING OF FOURTH PLOT #######
-  Xsize=7;Ysize=6;FName=paste('AX_G_e0_',S,'.tiff',sep='');Fac=333
+  Xsize=7;Ysize=6;FName=paste('./FIG/AX_G_e0_',S,'.tiff',sep='');Fac=333
   graphics.off()
   R=ceiling(max(abs(e0ar),abs(e0br),abs(e0cr))*10)/10
   tiff(paste(Dir,FName,sep=''), width=Xsize*Fac, height=Ysize*Fac, res=Fac,compression="lzw",pointsize=10)
