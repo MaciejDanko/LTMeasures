@@ -158,7 +158,7 @@ Perform.Analysis<-function(x,a,b,c=0,s=0,trace=T){
     for (bi in 1:length(b)){
       
       pos=round(100*((ai-1)*length(b)+bi)/(length(a)*length(b)),2)
-      cat(paste('\r\rCompleteted: ',pos,'%',paste(rep(' ',20),sep=''),sep=''))
+      cat(paste('\r\rCompleteted: ',pos,'%',paste(rep(' ',25),sep=''),sep=''))
       a_=a[ai]
       b_=b[bi]
       
@@ -504,7 +504,7 @@ b.=seq(0.025,0.3,0.0125)
 c=0
 s=0
 
-load.flag=T # Set to F if you want re-run computations
+load.flag=F # Set to F if you want re-run computations
 
 if (load.flag) {
   load(file='./DAT/AX3_5.dat')
@@ -512,6 +512,7 @@ if (load.flag) {
   load(file='./DAT/AX3_1.dat') 
 } else {
   #Quite long computations!!!
+  #Please make figure-window wide enough to preview the fitting without margin error.
   DDD_5=Perform.Analysis(x=seq(0,1e4,5),a=a.,b=b.,c=c,s=s)
   DDD_2=Perform.Analysis(x=seq(0,1e4,2),a=a.,b=b.,c=c,s=s)
   DDD_1=Perform.Analysis(x=seq(0,1e4,1),a=a.,b=b.,c=c,s=s)  
